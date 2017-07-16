@@ -66,4 +66,9 @@ public class Nerd {
     public void setSchool(String skool){
         school = skool;
     }
+
+    @Override
+    public String toString(){
+        return "First_name: " + firstName + "\n Last_name: " + lastName;
+    }
 }

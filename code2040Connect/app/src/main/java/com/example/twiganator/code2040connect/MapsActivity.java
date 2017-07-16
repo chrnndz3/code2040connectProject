@@ -5,6 +5,9 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import java.util.Random;
+
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Request.Method;
@@ -80,7 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-
 //        String str = "Occupation title:" + "Software Engineer" + '\n'
 //                + "Works:" + "Intuit" + '\n'
 //                + "Facebook id:" + "cindy.hernandez.77715";
@@ -88,7 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng currentLocation = new LatLng(latitide, longitude);
         double zoomLevel = 11; //This goes up to 21
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float)zoomLevel));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float) zoomLevel));
 
 //        mMap.addMarker(
 //                 new MarkerOptions()
@@ -99,9 +101,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        );
 
         //lat, lon
-        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
+        String[][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213", "-122.1138465"}};
 
-        for(int i =0; i < arr.length; i++ ){
+        for (int i = 0; i < arr.length; i++) {
             String name = arr[i][0];
             String company = arr[i][1];
             System.out.println(name);
@@ -120,7 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             float distanceInMeters = loc1.distanceTo(loc2);
             setMarker(name, lat1, lon1);
 
-            if(marker != null){
+            if (marker != null) {
                 marker.remove();
             }
 
@@ -129,13 +131,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(new LatLng(lat1, lon1))
                     .title(name)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-        );
+            );
 
 //            if(distanceInMeters < 50)
 //            {
+//        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
 //
-//            }
-        }
+//        for(int i =0; i < arr.length; i++ ){
+//            String name = arr[i][0];
+//            String company = arr[i][1];
+//            System.out.println(name);
+//            System.out.println(company);
+//            Double lat1 = Double.parseDouble(arr[i][2]);
+//            Double lon1 = Double.parseDouble(arr[i][3]);
+//            Location loc1 = new Location("");
+//
+//            loc1.setLatitude(lat1);
+//            loc1.setLongitude(lon1);
+//
+//            Location loc2 = new Location("");
+//            loc2.setLatitude(latitide);
+//            loc2.setLongitude(longitude);
+//
+//            float distanceInMeters = loc1.distanceTo(loc2);
+//            setMarker(name, lat1, lon1);
+//
+//            setPinWindow(company, "email");
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(lat1, lon1))
+//                    .title(name)
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+//        );
+//
+////            if(distanceInMeters < 50)
+////            {
+////
+////            }
+//        }
 
 //        //ADDED ANOTmR PIN
 //        mMap.addMarker(new MarkerOptions()
@@ -145,7 +177,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
 //        );
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        }
     }
 
     private void setPinWindow(final String str_company, final String str_email) {
@@ -198,7 +231,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Response.Listener<String> responseListener = new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
-                System.out.println("Haha sebastian" + response);
+//                System.out.println("Haha sebastian" + response);
                 String [] people = response.split("\\,\"|\\,\\[");
                 nerdses = new Nerd[135];
                 int j = 1;
@@ -214,7 +247,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String[] splt = single_info.split("\"");
                         entry = splt[0];
                     }
-                    System.out.println(entry);
+//                    System.out.println(entry);
 
                     if (j==1){
                         Nerd new_guy = new Nerd();
@@ -243,6 +276,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     j++;
                 }
+                float[] colors = new float[]{BitmapDescriptorFactory.HUE_AZURE, BitmapDescriptorFactory.HUE_BLUE, BitmapDescriptorFactory.HUE_CYAN, BitmapDescriptorFactory.HUE_GREEN, BitmapDescriptorFactory.HUE_MAGENTA, BitmapDescriptorFactory.HUE_ORANGE, BitmapDescriptorFactory.HUE_RED, BitmapDescriptorFactory.HUE_ROSE, BitmapDescriptorFactory.HUE_VIOLET, BitmapDescriptorFactory.HUE_YELLOW};
+                Random r = new Random();
+
+                for(int n = 0; n < nerdses.length; n++){
+                    System.out.println(nerdses[n]);
+                    if (nerdses[n] == null) {
+                        continue;
+                    } else {
+                        setPinWindow(nerdses[n].getCompany(), nerdses[n].getEmail());
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(nerdses[n].getLatitude(), nerdses[n].getLongitude()))
+                                .title(nerdses[n].getFirstName() + " " + nerdses[n].getLastName())
+//                                .snippet("I'm here!")
+                                .icon(BitmapDescriptorFactory.defaultMarker(colors[r.nextInt(colors.length)]))
+                        );
+
+                    }
+                }
+
                 try {
                     JSONObject json = new JSONObject(response);
                     boolean sucess = json.getBoolean("success");
@@ -279,66 +331,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        }
 
     }
-
-    public void parsePerson(String p){
-        String[] ppl = p.split("\\,");
-        for (int i = 0; i < ppl.length; i++){
-            String fixed = ppl[i].substring(1, ppl[i].length() - 1);
-            System.out.println(fixed);
-        }
-    }
-
-    /**
-     * Method to make json object request where json response starts wtih {
-     * */
-//    private void makeJsonObjectRequest() {
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-//                "https://code2040.000webhostapp.com/get_many_users.php", null, new Response.Listener<JSONObject>() {
-//
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                System.out.println(response.toString());
-//
-//                try {
-//                    // Parsing json object response
-//                    // response will be a json object
-//                    String name = response.getString("name");
-//                    String email = response.getString("email");
-//                    JSONObject phone = response.getJSONObject("phone");
-//                    String home = phone.getString("home");
-//                    String mobile = phone.getString("mobile");
-//
-//                    jsonResponse = "";
-//                    jsonResponse += "Name: " + name + "\n\n";
-//                    jsonResponse += "Email: " + email + "\n\n";
-//                    jsonResponse += "Home: " + home + "\n\n";
-//                    jsonResponse += "Mobile: " + mobile + "\n\n";
-//
-//                    txtResponse.setText(jsonResponse);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(),
-//                            "Error: " + e.getMessage(),
-//                            Toast.LENGTH_LONG).show();
-//                }
-//                hidepDialog();
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                VolleyLog.d(TAG, "Error: " + error.getMessage());
-//                Toast.makeText(getApplicationContext(),
-//                        error.getMessage(), Toast.LENGTH_SHORT).show();
-//                // hide the progress dialog
-//                hidepDialog();
-//            }
-//        });
-//
-//        // Adding request to request queue
-//        AppController.getInstance().addToRequestQueue(jsonObjReq);
-//    }
 
 }
