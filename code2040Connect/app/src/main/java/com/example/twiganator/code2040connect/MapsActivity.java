@@ -101,37 +101,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        );
 
         //lat, lon
-        String[][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213", "-122.1138465"}};
+//        String[][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213", "-122.1138465"}};
 
-        for (int i = 0; i < arr.length; i++) {
-            String name = arr[i][0];
-            String company = arr[i][1];
-            System.out.println(name);
-            System.out.println(company);
-            Double lat1 = Double.parseDouble(arr[i][2]);
-            Double lon1 = Double.parseDouble(arr[i][3]);
-            Location loc1 = new Location("");
+//        for (int i = 0; i < arr.length; i++) {
+//            String name = arr[i][0];
+//            String company = arr[i][1];
+//            System.out.println(name);
+//            System.out.println(company);
+//            Double lat1 = Double.parseDouble(arr[i][2]);
+//            Double lon1 = Double.parseDouble(arr[i][3]);
+//            Location loc1 = new Location("");
+//
+//            loc1.setLatitude(lat1);
+//            loc1.setLongitude(lon1);
+//
+//            Location loc2 = new Location("");
+//            loc2.setLatitude(latitide);
+//            loc2.setLongitude(longitude);
+//
+//            float distanceInMeters = loc1.distanceTo(loc2);
+//            setMarker(name, lat1, lon1);
+//
+//            if (marker != null) {
+//                marker.remove();
+//            }
 
-            loc1.setLatitude(lat1);
-            loc1.setLongitude(lon1);
-
-            Location loc2 = new Location("");
-            loc2.setLatitude(latitide);
-            loc2.setLongitude(longitude);
-
-            float distanceInMeters = loc1.distanceTo(loc2);
-            setMarker(name, lat1, lon1);
-
-            if (marker != null) {
-                marker.remove();
-            }
-
-            setPinWindow(company, "email");
-            mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lat1, lon1))
-                    .title(name)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-            );
+//            setPinWindow(company, "email");
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(lat1, lon1))
+//                    .title(name)
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+//            );
 
 //            if(distanceInMeters < 50)
 //            {
@@ -179,7 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
         }
-    }
+
 
     private void setPinWindow(final String str_company, final String str_email) {
         if(mMap != null){
