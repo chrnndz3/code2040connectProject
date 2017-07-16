@@ -42,20 +42,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLocation;
     double latitide, longitude;
     private JSONObject jsonResponse;
-
+    String jamal;
+    Nerd [] nerdses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         getData();
-        System.out.println("jsonResponse: " + jsonResponse);
-
         gpsTracker = new GPSTracker(getApplicationContext());
         mLocation = gpsTracker.getLocation();
 
         latitide = mLocation.getLatitude();
         longitude = mLocation.getLongitude();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -201,11 +201,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getData(){
-
         Response.Listener<String> responseListener = new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
-                System.out.println(response);
+                System.out.println("Haha sebastian" + response);
+                String [] people = response.split("\\,\"|\\,\\[");
+                nerdses = new Nerd[135];
+                int j = 1;
+                int index = 0;
+                for (int i=1;i< people.length;i++){
+                    System.out.println(i + "| " + people[i-1]);
+                    String single_info = people[i-1];
+                    String entry;
+                    try {
+//                        entry = single_info.substring(single_info.indexOf('"') + 1, single_info.indexOf('"', 3));
+                        String[] splt = single_info.split("\"");
+                        entry = splt[1];
+                    } catch (Exception e){
+                        String[] splt = single_info.split("\"");
+                        entry = splt[0];
+                    }
+                    System.out.println(entry);
+                    if (j==1){
+                        Nerd new_guy = new Nerd();
+                        new_guy.setFirstName(entry);
+                        nerdses[index] = new_guy;
+                    }
+                    else if (j==2){
+                        nerdses[index].setLastName(entry);
+                    }
+                    else if (j==3){
+                        nerdses [index].setEmail(entry);
+                    }
+                    else if (j==4){
+                        nerdses [index].setCompany(entry);
+                    }
+                    else if (j==5){
+                        nerdses [index].setLongitude(Double.parseDouble(entry));
+                    }
+                    else if (j==6){
+                        nerdses[index].setLatitude(Double.parseDouble(entry));
+                    }
+                    else if (j==7){
+                        nerdses[index].setSchool(entry);
+                        j = 0;
+                        index++;
+                    }
+                    j++;
+                }
                 try {
                     JSONObject json = new JSONObject(response);
                     boolean sucess = json.getBoolean("success");
@@ -231,6 +274,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         RetrievalRequest retrievalRequest = new RetrievalRequest(responseListener);
         RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
         queue.add(retrievalRequest);
+
+        //        Iterator<?> keys = jsonResponse.keys();
+//
+//        while( keys.hasNext() ) {
+//            String key = (String)keys.next();
+//            if ( jsonResponse.get(key) instanceof JSONObject ) {
+//                jsonResponse.toString();
+//            }
+//        }
+
+    }
+
+    public void parsePerson(String p){
+        String[] ppl = p.split("\\,");
+        for (int i = 0; i < ppl.length; i++){
+            String fixed = ppl[i].substring(1, ppl[i].length() - 1);
+            System.out.println(fixed);
+        }
     }
 
     /**
