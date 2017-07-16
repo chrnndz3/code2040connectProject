@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">code2040Connect</string>
     <string name="title_activity_maps">Map</string>
+    <string name="Connect2040"> Connect2040 </string>
+    <string name="shpeel_text"> This is the greatest App for people who are also great.</string>
+    <string name="sign_in_button"> Sign In </string>
+    <string name="sign_up_button"> Sign Up</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
