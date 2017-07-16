@@ -15,7 +15,7 @@
         android:text="@string/shpeel_text"
         android:textAlignment="center"
         android:gravity="center"
-        android:textSize="@dimen/cast_intro_overlay_focus_radius"
+        android:textSize="36dp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/shpeel_text"
