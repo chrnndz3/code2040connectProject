@@ -105,6 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String name = arr[i][0];
             String company = arr[i][1];
             System.out.println(name);
+            System.out.println(company);
             Double lat1 = Double.parseDouble(arr[i][2]);
             Double lon1 = Double.parseDouble(arr[i][3]);
             Location loc1 = new Location("");
@@ -157,14 +158,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
 
                     TextView name = (TextView) v.findViewById(R.id.name);
-                    TextView workTitle = (TextView) v.findViewById(R.id.workTitle);
                     TextView company = (TextView) v.findViewById(R.id.company);
                     TextView email = (TextView) v.findViewById(R.id.email);
 //                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
 
                     LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
-                    workTitle.setText(str_email);
                     company.setText(str_company);
                     email.setText(str_email);
 //                    vsnippet.setText(marker.getSnippet());
