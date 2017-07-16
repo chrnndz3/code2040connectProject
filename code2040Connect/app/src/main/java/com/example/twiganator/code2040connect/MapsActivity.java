@@ -137,7 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            }
         }
 
-//        //ADDED ANOTHER PIN
+//        //ADDED ANOTmR PIN
 //        mMap.addMarker(new MarkerOptions()
 //                .position(new LatLng(40.7143528, -74.0059731))
 //                .title("pin")
