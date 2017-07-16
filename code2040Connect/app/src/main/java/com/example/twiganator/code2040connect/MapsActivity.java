@@ -5,6 +5,9 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import java.util.Random;
+
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Request.Method;
@@ -99,39 +102,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         );
 
         //lat, lon
-        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
-
-        for(int i =0; i < arr.length; i++ ){
-            String name = arr[i][0];
-            String company = arr[i][1];
-            System.out.println(name);
-            System.out.println(company);
-            Double lat1 = Double.parseDouble(arr[i][2]);
-            Double lon1 = Double.parseDouble(arr[i][3]);
-            Location loc1 = new Location("");
-
-            loc1.setLatitude(lat1);
-            loc1.setLongitude(lon1);
-
-            Location loc2 = new Location("");
-            loc2.setLatitude(latitide);
-            loc2.setLongitude(longitude);
-
-            float distanceInMeters = loc1.distanceTo(loc2);
-            setMarker(name, lat1, lon1);
-
-            setPinWindow(company, "email");
-            mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(lat1, lon1))
-                    .title(name)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-        );
-
-//            if(distanceInMeters < 50)
-//            {
+//        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
 //
-//            }
-        }
+//        for(int i =0; i < arr.length; i++ ){
+//            String name = arr[i][0];
+//            String company = arr[i][1];
+//            System.out.println(name);
+//            System.out.println(company);
+//            Double lat1 = Double.parseDouble(arr[i][2]);
+//            Double lon1 = Double.parseDouble(arr[i][3]);
+//            Location loc1 = new Location("");
+//
+//            loc1.setLatitude(lat1);
+//            loc1.setLongitude(lon1);
+//
+//            Location loc2 = new Location("");
+//            loc2.setLatitude(latitide);
+//            loc2.setLongitude(longitude);
+//
+//            float distanceInMeters = loc1.distanceTo(loc2);
+//            setMarker(name, lat1, lon1);
+//
+//            setPinWindow(company, "email");
+//            mMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(lat1, lon1))
+//                    .title(name)
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+//        );
+//
+////            if(distanceInMeters < 50)
+////            {
+////
+////            }
+//        }
 
 //        //ADDED ANOTHER PIN
 //        mMap.addMarker(new MarkerOptions()
@@ -162,7 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     TextView email = (TextView) v.findViewById(R.id.email);
 //                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
 
-                    LatLng ll_marker = marker.getPosition();
+//                    LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
                     company.setText(str_company);
                     email.setText(str_email);
@@ -194,7 +197,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Response.Listener<String> responseListener = new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
-                System.out.println("Haha sebastian" + response);
+//                System.out.println("Haha sebastian" + response);
                 String [] people = response.split("\\,\"|\\,\\[");
                 nerdses = new Nerd[135];
                 int j = 1;
@@ -210,7 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String[] splt = single_info.split("\"");
                         entry = splt[0];
                     }
-                    System.out.println(entry);
+//                    System.out.println(entry);
 
                     if (j==1){
                         Nerd new_guy = new Nerd();
@@ -239,6 +242,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     j++;
                 }
+                float[] colors = new float[]{BitmapDescriptorFactory.HUE_AZURE, BitmapDescriptorFactory.HUE_BLUE, BitmapDescriptorFactory.HUE_CYAN, BitmapDescriptorFactory.HUE_GREEN, BitmapDescriptorFactory.HUE_MAGENTA, BitmapDescriptorFactory.HUE_ORANGE, BitmapDescriptorFactory.HUE_RED, BitmapDescriptorFactory.HUE_ROSE, BitmapDescriptorFactory.HUE_VIOLET, BitmapDescriptorFactory.HUE_YELLOW};
+                Random r = new Random();
+
+                for(int n = 0; n < nerdses.length; n++){
+                    System.out.println(nerdses[n]);
+                    if (nerdses[n] == null) {
+                        continue;
+                    } else {
+                        setPinWindow(nerdses[n].getCompany(), nerdses[n].getEmail());
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(nerdses[n].getLatitude(), nerdses[n].getLongitude()))
+                                .title(nerdses[n].getFirstName() + " " + nerdses[n].getLastName())
+//                                .snippet("I'm here!")
+                                .icon(BitmapDescriptorFactory.defaultMarker(colors[r.nextInt(colors.length)]))
+                        );
+
+                    }
+                }
+
                 try {
                     JSONObject json = new JSONObject(response);
                     boolean sucess = json.getBoolean("success");
