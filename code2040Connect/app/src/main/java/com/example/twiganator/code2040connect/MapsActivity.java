@@ -33,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -40,20 +42,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLocation;
     double latitide, longitude;
     private JSONObject jsonResponse;
-
+    String jamal;
+    Nerd [] nerdses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         getData();
-        System.out.println("jsonResponse: " + jsonResponse);
-
         gpsTracker = new GPSTracker(getApplicationContext());
         mLocation = gpsTracker.getLocation();
 
         latitide = mLocation.getLatitude();
         longitude = mLocation.getLongitude();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -77,8 +79,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        setMarker("Cindy Hernandez",41.7143528, -64.0059731);
 
+
+//        String str = "Occupation title:" + "Software Engineer" + '\n'
+//                + "Works:" + "Intuit" + '\n'
+//                + "Facebook id:" + "cindy.hernandez.77715";
+
+        // Add a marker in Sydney and move the camera
+        LatLng currentLocation = new LatLng(latitide, longitude);
+        double zoomLevel = 11; //This goes up to 21
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float)zoomLevel));
+
+        mMap.addMarker(
+                 new MarkerOptions()
+                .position(currentLocation)
+                .title("Cindy Hernandez")
+                .snippet("I'm here")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+        );
+
+        //lat, lon
+        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
+
+        for(int i =0; i < arr.length; i++ ){
+            String name = arr[i][0];
+            String company = arr[i][1];
+            System.out.println(name);
+            Double lat1 = Double.parseDouble(arr[i][2]);
+            Double lon1 = Double.parseDouble(arr[i][3]);
+            Location loc1 = new Location("");
+
+            loc1.setLatitude(lat1);
+            loc1.setLongitude(lon1);
+
+            Location loc2 = new Location("");
+            loc2.setLatitude(latitide);
+            loc2.setLongitude(longitude);
+
+            float distanceInMeters = loc1.distanceTo(loc2);
+            setMarker(name, lat1, lon1);
+
+            setPinWindow(company, "email");
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat1, lon1))
+                    .title(name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+        );
+
+//            if(distanceInMeters < 50)
+//            {
+//
+//            }
+        }
+
+//        //ADDED ANOTHER PIN
+//        mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(40.7143528, -74.0059731))
+//                .title("pin")
+//                .snippet("and snippet")
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+//        );
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+    }
+
+    private void setPinWindow(final String str_company, final String str_email) {
         if(mMap != null){
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
 
@@ -95,16 +160,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     TextView workTitle = (TextView) v.findViewById(R.id.workTitle);
                     TextView company = (TextView) v.findViewById(R.id.company);
                     TextView email = (TextView) v.findViewById(R.id.email);
-                    TextView facebookId = (TextView) v.findViewById(R.id.facebookID);
-                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
+//                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
 
                     LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
-                    workTitle.setText("Software Engineer");
-                    company.setText("Intuit");
-                    email.setText("chrnndz3@gmail.com");
-                    facebookId.setText("cindy.hernandez.77715");
-                    vsnippet.setText(marker.getSnippet());
+                    workTitle.setText(str_email);
+                    company.setText(str_company);
+                    email.setText(str_email);
+//                    vsnippet.setText(marker.getSnippet());
 
                     return v;
                 }
@@ -112,37 +175,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
 
         }
-
-//        String str = "Occupation title:" + "Software Engineer" + '\n'
-//                + "Works:" + "Intuit" + '\n'
-//                + "Facebook id:" + "cindy.hernandez.77715";
-
-        // Add a marker in Sydney and move the camera
-        LatLng currentLocation = new LatLng(latitide, longitude);
-        mMap.addMarker(new MarkerOptions()
-                .position(currentLocation)
-                .title("Cindy Hernandez")
-                .snippet("I'm here")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-//                fromResource(R.mipmap.ic_launcher)
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
-
-//        for(Object object: jsonArray){
-//            JSONObject jsonObject = (JSONObject) object;
-//            // Then you can go on from here
-//        }
-
-
-        //ADDED ANOTHER PIN
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(40.7143528, -74.0059731))
-                .title("pin")
-                .snippet("and snippet")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-        );
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
     }
 
     private void setMarker(String name, double lat, double lng) {
@@ -160,11 +192,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getData(){
-
         Response.Listener<String> responseListener = new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
-                System.out.println(response);
+                System.out.println("Haha sebastian" + response);
+                String [] people = response.split("\\,\"|\\,\\[");
+                nerdses = new Nerd[135];
+                int j = 1;
+                int index = 0;
+                for (int i=1;i< people.length;i++){
+                    String single_info = people[i-1];
+                    String entry;
+                    try {
+//                        entry = single_info.substring(single_info.indexOf('"') + 1, single_info.indexOf('"', 3));
+                        String[] splt = single_info.split("\"");
+                        entry = splt[1];
+                    } catch (Exception e){
+                        String[] splt = single_info.split("\"");
+                        entry = splt[0];
+                    }
+                    System.out.println(entry);
+
+                    if (j==1){
+                        Nerd new_guy = new Nerd();
+                        new_guy.setFirstName(entry);
+                        nerdses[index] = new_guy;
+                    }
+                    else if (j==2){
+                        nerdses[index].setLastName(entry);
+                    }
+                    else if (j==3){
+                        nerdses [index].setEmail(entry);
+                    }
+                    else if (j==4){
+                        nerdses [index].setCompany(entry);
+                    }
+                    else if (j==5){
+                        nerdses [index].setLongitude(Double.parseDouble(entry));
+                    }
+                    else if (j==6){
+                        nerdses[index].setLatitude(Double.parseDouble(entry));
+                    }
+                    else if (j==7){
+                        nerdses[index].setSchool(entry);
+                        j = 0;
+                        index++;
+                    }
+                    j++;
+                }
                 try {
                     JSONObject json = new JSONObject(response);
                     boolean sucess = json.getBoolean("success");
@@ -190,6 +265,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         RetrievalRequest retrievalRequest = new RetrievalRequest(responseListener);
         RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
         queue.add(retrievalRequest);
+
+        //        Iterator<?> keys = jsonResponse.keys();
+//
+//        while( keys.hasNext() ) {
+//            String key = (String)keys.next();
+//            if ( jsonResponse.get(key) instanceof JSONObject ) {
+//                jsonResponse.toString();
+//            }
+//        }
+
+    }
+
+    public void parsePerson(String p){
+        String[] ppl = p.split("\\,");
+        for (int i = 0; i < ppl.length; i++){
+            String fixed = ppl[i].substring(1, ppl[i].length() - 1);
+            System.out.println(fixed);
+        }
     }
 
 
