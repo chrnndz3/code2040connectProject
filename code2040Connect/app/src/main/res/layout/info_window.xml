@@ -22,12 +22,6 @@
             android:text="name" />
 
         <TextView
-            android:id="@+id/workTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="work title" />
-
-        <TextView
             android:id="@+id/company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,10 +34,10 @@
             android:text="email" />
 
         <TextView
-            android:id="@+id/facebookID"
+            android:id="@+id/school"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="facebookID" />
+            android:text="school" />
 
         <TextView
             android:id="@+id/snippet"

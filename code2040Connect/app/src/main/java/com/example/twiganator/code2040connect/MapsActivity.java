@@ -96,13 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .title("Cindy Hernandez")
                 .snippet("I'm here")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-// new MarkerOptions()
-//                .position(currentLocation)
-//                .title("Cindy Hernandez")
-//                .snippet("I'm here")
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-//                fromResource(R.mipmap.ic_launcher)
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
         );
 
         //lat, lon
@@ -126,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             float distanceInMeters = loc1.distanceTo(loc2);
             setMarker(name, lat1, lon1);
 
-            setPinWindow(company, " ");
+            setPinWindow(company, "email");
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat1, lon1))
                     .title(name)
@@ -167,16 +160,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     TextView workTitle = (TextView) v.findViewById(R.id.workTitle);
                     TextView company = (TextView) v.findViewById(R.id.company);
                     TextView email = (TextView) v.findViewById(R.id.email);
-                    TextView facebookId = (TextView) v.findViewById(R.id.facebookID);
-                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
+//                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
 
                     LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
-                    workTitle.setText("Software Engineer");
+                    workTitle.setText(str_email);
                     company.setText(str_company);
                     email.setText(str_email);
-                    facebookId.setText("cindy.hernandez.77715");
-                    vsnippet.setText(marker.getSnippet());
+//                    vsnippet.setText(marker.getSnippet());
 
                     return v;
                 }
@@ -210,7 +201,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int j = 1;
                 int index = 0;
                 for (int i=1;i< people.length;i++){
-                    System.out.println(i + "| " + people[i-1]);
                     String single_info = people[i-1];
                     String entry;
                     try {
@@ -222,6 +212,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         entry = splt[0];
                     }
                     System.out.println(entry);
+
                     if (j==1){
                         Nerd new_guy = new Nerd();
                         new_guy.setFirstName(entry);
