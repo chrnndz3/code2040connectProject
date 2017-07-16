@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RetrievalRequest extends StringRequest {
 
-    private static final String USERS_REQUEST_URL = "https://code2040.000webhostapp.com/get_many_users.php";
+    private static final String USERS_REQUEST_URL = "https://code2040.000webhostapp.com/get_users.php";
     private Map<String, String> params;
 
     // $first_name, $last_name, $username, $password, $email, $company, $university

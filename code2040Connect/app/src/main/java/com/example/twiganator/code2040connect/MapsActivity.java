@@ -192,57 +192,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         queue.add(retrievalRequest);
     }
 
-    /**
-     * Method to make json object request where json response starts wtih {
-     * */
-//    private void makeJsonObjectRequest() {
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Method.GET,
-//                "https://code2040.000webhostapp.com/get_many_users.php", null, new Response.Listener<JSONObject>() {
-//
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                System.out.println(response.toString());
-//
-//                try {
-//                    // Parsing json object response
-//                    // response will be a json object
-//                    String name = response.getString("name");
-//                    String email = response.getString("email");
-//                    JSONObject phone = response.getJSONObject("phone");
-//                    String home = phone.getString("home");
-//                    String mobile = phone.getString("mobile");
-//
-//                    jsonResponse = "";
-//                    jsonResponse += "Name: " + name + "\n\n";
-//                    jsonResponse += "Email: " + email + "\n\n";
-//                    jsonResponse += "Home: " + home + "\n\n";
-//                    jsonResponse += "Mobile: " + mobile + "\n\n";
-//
-//                    txtResponse.setText(jsonResponse);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(),
-//                            "Error: " + e.getMessage(),
-//                            Toast.LENGTH_LONG).show();
-//                }
-//                hidepDialog();
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                VolleyLog.d(TAG, "Error: " + error.getMessage());
-//                Toast.makeText(getApplicationContext(),
-//                        error.getMessage(), Toast.LENGTH_SHORT).show();
-//                // hide the progress dialog
-//                hidepDialog();
-//            }
-//        });
-//
-//        // Adding request to request queue
-//        AppController.getInstance().addToRequestQueue(jsonObjReq);
-//    }
 
 }
