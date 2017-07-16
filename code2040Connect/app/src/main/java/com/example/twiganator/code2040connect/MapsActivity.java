@@ -277,13 +277,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void parsePerson(String p){
-        String[] ppl = p.split("\\,");
-        for (int i = 0; i < ppl.length; i++){
-            String fixed = ppl[i].substring(1, ppl[i].length() - 1);
-            System.out.println(fixed);
-        }
-    }
-
-
 }
