@@ -33,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -77,8 +79,78 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        setMarker("Cindy Hernandez",41.7143528, -64.0059731);
 
+
+//        String str = "Occupation title:" + "Software Engineer" + '\n'
+//                + "Works:" + "Intuit" + '\n'
+//                + "Facebook id:" + "cindy.hernandez.77715";
+
+        // Add a marker in Sydney and move the camera
+        LatLng currentLocation = new LatLng(latitide, longitude);
+        double zoomLevel = 11; //This goes up to 21
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float)zoomLevel));
+
+        mMap.addMarker(
+                 new MarkerOptions()
+                .position(currentLocation)
+                .title("Cindy Hernandez")
+                .snippet("I'm here")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+// new MarkerOptions()
+//                .position(currentLocation)
+//                .title("Cindy Hernandez")
+//                .snippet("I'm here")
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+//                fromResource(R.mipmap.ic_launcher)
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+        );
+
+        //lat, lon
+        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
+
+        for(int i =0; i < arr.length; i++ ){
+            String name = arr[i][0];
+            String company = arr[i][1];
+            System.out.println(name);
+            Double lat1 = Double.parseDouble(arr[i][2]);
+            Double lon1 = Double.parseDouble(arr[i][3]);
+            Location loc1 = new Location("");
+
+            loc1.setLatitude(lat1);
+            loc1.setLongitude(lon1);
+
+            Location loc2 = new Location("");
+            loc2.setLatitude(latitide);
+            loc2.setLongitude(longitude);
+
+            float distanceInMeters = loc1.distanceTo(loc2);
+            setMarker(name, lat1, lon1);
+
+            setPinWindow(company, " ");
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat1, lon1))
+                    .title(name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+        );
+
+//            if(distanceInMeters < 50)
+//            {
+//
+//            }
+        }
+
+//        //ADDED ANOTHER PIN
+//        mMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(40.7143528, -74.0059731))
+//                .title("pin")
+//                .snippet("and snippet")
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+//        );
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+    }
+
+    private void setPinWindow(final String str_company, final String str_email) {
         if(mMap != null){
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
 
@@ -101,8 +173,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
                     workTitle.setText("Software Engineer");
-                    company.setText("Intuit");
-                    email.setText("chrnndz3@gmail.com");
+                    company.setText(str_company);
+                    email.setText(str_email);
                     facebookId.setText("cindy.hernandez.77715");
                     vsnippet.setText(marker.getSnippet());
 
@@ -112,37 +184,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
 
         }
-
-//        String str = "Occupation title:" + "Software Engineer" + '\n'
-//                + "Works:" + "Intuit" + '\n'
-//                + "Facebook id:" + "cindy.hernandez.77715";
-
-        // Add a marker in Sydney and move the camera
-        LatLng currentLocation = new LatLng(latitide, longitude);
-        mMap.addMarker(new MarkerOptions()
-                .position(currentLocation)
-                .title("Cindy Hernandez")
-                .snippet("I'm here")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-//                fromResource(R.mipmap.ic_launcher)
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
-
-//        for(Object object: jsonArray){
-//            JSONObject jsonObject = (JSONObject) object;
-//            // Then you can go on from here
-//        }
-
-
-        //ADDED ANOTHER PIN
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(40.7143528, -74.0059731))
-                .title("pin")
-                .snippet("and snippet")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-        );
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
     }
 
     private void setMarker(String name, double lat, double lng) {
