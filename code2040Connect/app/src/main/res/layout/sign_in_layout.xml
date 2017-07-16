@@ -15,8 +15,8 @@
         android:id="@+id/Code2040Logo"
         android:layout_width="match_parent"
         android:layout_marginTop="50dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/code2040sss" />
+        android:layout_height="450dp"
+        android:src="@drawable/teamphoto" />
 
     <TextView
         android:id="@+id/shpeel_text"
