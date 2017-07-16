@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,11 +23,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_layout);
 
-        final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        final EditText etUsername = (EditText) findViewById(R.id.login_text);
+        final EditText etPassword = (EditText) findViewById(R.id.password_text);
 
         final Button bLogin = (Button) findViewById(R.id.sign_in_button);
-        final TextView registerLink = (TextView) findViewById(R.id.sign_up_button);
+        final TextView registerLink = (TextView) findViewById(R.id.register_text);
 
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 };
 
                 LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-
+                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+                queue.add(loginRequest);
             }
         });
     }
