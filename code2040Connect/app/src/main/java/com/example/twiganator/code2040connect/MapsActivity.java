@@ -161,15 +161,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
 
                     TextView name = (TextView) v.findViewById(R.id.name);
-                    TextView company = (TextView) v.findViewById(R.id.company);
-                    TextView email = (TextView) v.findViewById(R.id.email);
+//                    TextView company = (TextView) v.findViewById(R.id.company);
+//                    TextView email = (TextView) v.findViewById(R.id.email);
+//                    TextView school = (TextView) v.findViewById(R.id.school);
 //                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
 
 //                    LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
-                    company.setText(str_company);
-                    email.setText(str_email);
-//                    vsnippet.setText(marker.getSnippet());
+
 
                     return v;
                 }
@@ -198,7 +197,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onResponse(String response) {
 //                System.out.println("Haha sebastian" + response);
-                String [] people = response.split("\\,\"|\\,\\[");
+                String [] people = response.split("\\,\"|\\]\\,\\[");
                 nerdses = new Nerd[135];
                 int j = 1;
                 int index = 0;
@@ -253,8 +252,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         setPinWindow(nerdses[n].getCompany(), nerdses[n].getEmail());
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(nerdses[n].getLatitude(), nerdses[n].getLongitude()))
-                                .title(nerdses[n].getFirstName() + " " + nerdses[n].getLastName())
-//                                .snippet("I'm here!")
+                                .title(nerdses[n].getFirstName() + " " + nerdses[n].getLastName() + "\n" + nerdses[n].getCompany() + "\n" + nerdses[n].getEmail() + "\n" + nerdses[n].getSchool())
+                                .snippet(nerdses[n].getEmail())
                                 .icon(BitmapDescriptorFactory.defaultMarker(colors[r.nextInt(colors.length)]))
                         );
 
