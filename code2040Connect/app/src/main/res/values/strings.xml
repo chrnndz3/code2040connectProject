@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">code2040Connect</string>
+    <string name="app_name">connect2040</string>
     <string name="title_activity_maps">Map</string>
     <string name="Connect2040"> Connect2040 </string>
     <string name="shpeel_text"> Welcome to Connect2040! Connect with Fellows near you😉 </string>
