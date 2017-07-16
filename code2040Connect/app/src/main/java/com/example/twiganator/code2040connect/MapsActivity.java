@@ -90,13 +90,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double zoomLevel = 11; //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float)zoomLevel));
 
-        mMap.addMarker(
-                 new MarkerOptions()
-                .position(currentLocation)
-                .title("Cindy Hernandez")
-                .snippet("I'm here")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
+//        mMap.addMarker(
+//                 new MarkerOptions()
+//                .position(currentLocation)
+//                .title("Cindy Hernandez")
+//                .snippet("I'm here")
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+//        );
 
         //lat, lon
         String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
@@ -119,6 +119,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             float distanceInMeters = loc1.distanceTo(loc2);
             setMarker(name, lat1, lon1);
+
+            if(marker != null){
+                marker.remove();
+            }
 
             setPinWindow(company, "email");
             mMap.addMarker(new MarkerOptions()
@@ -160,13 +164,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     TextView name = (TextView) v.findViewById(R.id.name);
                     TextView company = (TextView) v.findViewById(R.id.company);
                     TextView email = (TextView) v.findViewById(R.id.email);
-//                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
+                    TextView vsnippet = (TextView) v.findViewById(R.id.snippet);
 
-                    LatLng ll_marker = marker.getPosition();
+//                    LatLng ll_marker = marker.getPosition();
                     name.setText(marker.getTitle());
                     company.setText(str_company);
                     email.setText(str_email);
-//                    vsnippet.setText(marker.getSnippet());
+                    vsnippet.setText(marker.getSnippet());
 
                     return v;
                 }
