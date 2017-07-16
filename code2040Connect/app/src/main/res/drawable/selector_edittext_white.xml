@@ -1,5 +1,5 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:bottom="-15dp">
+    <item android:bottom="-32dp">
         <rotate xmlns:android="http://schemas.android.com/apk/res/android"
             android:fromDegrees="0"
             android:pivotX="0.5"
