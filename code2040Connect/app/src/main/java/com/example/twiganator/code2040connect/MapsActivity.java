@@ -83,7 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-
 //        String str = "Occupation title:" + "Software Engineer" + '\n'
 //                + "Works:" + "Intuit" + '\n'
 //                + "Facebook id:" + "cindy.hernandez.77715";
@@ -91,17 +90,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng currentLocation = new LatLng(latitide, longitude);
         double zoomLevel = 11; //This goes up to 21
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float)zoomLevel));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, (float) zoomLevel));
 
-        mMap.addMarker(
-                 new MarkerOptions()
-                .position(currentLocation)
-                .title("Cindy Hernandez")
-                .snippet("I'm here")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
+//        mMap.addMarker(
+//                 new MarkerOptions()
+//                .position(currentLocation)
+//                .title("Cindy Hernandez")
+//                .snippet("I'm here")
+//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+//        );
 
         //lat, lon
+        String[][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213", "-122.1138465"}};
+
+        for (int i = 0; i < arr.length; i++) {
+            String name = arr[i][0];
+            String company = arr[i][1];
+            System.out.println(name);
+            System.out.println(company);
+            Double lat1 = Double.parseDouble(arr[i][2]);
+            Double lon1 = Double.parseDouble(arr[i][3]);
+            Location loc1 = new Location("");
+
+            loc1.setLatitude(lat1);
+            loc1.setLongitude(lon1);
+
+            Location loc2 = new Location("");
+            loc2.setLatitude(latitide);
+            loc2.setLongitude(longitude);
+
+            float distanceInMeters = loc1.distanceTo(loc2);
+            setMarker(name, lat1, lon1);
+
+            if (marker != null) {
+                marker.remove();
+            }
+
+            setPinWindow(company, "email");
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat1, lon1))
+                    .title(name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+            );
+
+//            if(distanceInMeters < 50)
+//            {
 //        String [][] arr = {{"Billy", "Paypal", "37.4088733", "-121.9302447"}, {"Bob", "Google", "37.4199213","-122.1138465" }};
 //
 //        for(int i =0; i < arr.length; i++ ){
@@ -136,7 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 ////            }
 //        }
 
-//        //ADDED ANOTHER PIN
+//        //ADDED ANOTmR PIN
 //        mMap.addMarker(new MarkerOptions()
 //                .position(new LatLng(40.7143528, -74.0059731))
 //                .title("pin")
@@ -144,7 +177,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
 //        );
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        }
     }
 
     private void setPinWindow(final String str_company, final String str_email) {
